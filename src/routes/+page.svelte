@@ -1,15 +1,15 @@
 <div class="flex justify-center items-center h-screen">
     <div class="container bg-gray-800 p-10 rounded-lg">
-        <a href="/playlist" class="bg-purple-500 px-6 py-3 rounded-full font-semibold hover:bg-emerald-400">
+        <a href="/playlist" class="bg-purple-500 px-6 py-3 rounded-full font-semibold hover:bg-emerald-400 inline-block">
             PLAYLISTS
         </a>
 
-        <div class="flex flex-row justify-between mt-10 mb-2 items-center">
+        <div class="flex flex-row justify-between my-2 items-center">
             <p class="text-2xl font-semibold">
                 SONGS
             </p>
-            <a href="/playlist" class="bg-purple-500 px-6 py-3 rounded-full font-semibold hover:bg-emerald-400">
-                ADD SONG
+            <a href="/playlist" class="bg-purple-500 px-6 py-2 rounded-full font-semibold hover:bg-emerald-400 inline-block">
+                + SONG
             </a>
         </div>
 
@@ -19,7 +19,6 @@
                 <th>Song</th>
                 <th>Artist</th>
                 <th>Year</th>
-                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -27,9 +26,14 @@
                 <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
                 <td>Malcolm Lockyer</td>
                 <td>1961</td>
-                <td class="text-right"><a href="#" class="bg-purple-500 px-6 py-3 rounded-full font-semibold hover:bg-emerald-400">
-                    EDIT
-                </a></td>
+                <td class="py-2 flex flex-row justify-end gap-4">
+                    <a href="/" class="bg-purple-500 px-6 py-2 rounded-full font-semibold hover:bg-emerald-400">
+                        EDIT
+                    </a>
+                    <a href="/" class="bg-purple-500 px-6 py-2 rounded-full font-semibold hover:bg-red-500">
+                        DELETE
+                    </a>
+                </td>
               </tr>
               <tr class="border-b border-slate-400">
                 <td>Witchy Woman</td>
