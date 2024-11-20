@@ -40,7 +40,7 @@
               href="/"
               class="px-6 py-2 font-semibold bg-purple-500 rounded-full hover:bg-red-500"
             >
-              DELETE
+              REMOVE
             </a>
           </td>
         </tr>

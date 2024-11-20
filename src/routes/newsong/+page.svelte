@@ -13,6 +13,7 @@
     </a>
     <div class="flex justify-center mt-10">
       <form method="POST" class="flex flex-col gap-4 2xl:w-1/3">
+        <h2 class="text-2xl font-semibold">NEW SONG</h2>
         <input name="id" type="hidden" />
         <label>
           Title
