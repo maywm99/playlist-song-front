@@ -1,8 +1,8 @@
 <script>
+  import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
 
   let data = [];
-  let loading = true;
 
   async function fetchData() {
     try {
@@ -18,18 +18,10 @@
 
       // Access the data through _embedded
       data = result._embedded.albumDtoList; // or result._embedded.musics depending on your API
-      loading = false;
-
-      // Format the date for each album
-      data = data.map(album => {
-        album.releaseDate = formatDate(album.releaseDate);
-        return album;
-      });
 
       console.log('Final data:', data);
     } catch (error) {
       console.error('Error:', error);
-      loading = false;
     }
   }
 
@@ -37,9 +29,11 @@
     fetchData();
   });
 
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toISOString().split('T')[0]; // Extract the date part
+  function edit(id) {
+    // Store the selected album in localStorage
+    localStorage.setItem('albumId', id);
+    // Navigate to the edit page
+    goto('/album/editalbum');
   }
 
   async function remove(id) {
@@ -95,14 +89,14 @@
           <tr class="border-b border-slate-400">
             <td>{album.title}</td>
             <td>{album.artist}</td>
-            <td>{album.releaseDate}</td>
+            <td>{album.releaseDate.split('T')[0]}</td>
             <td class="flex flex-row justify-end gap-4 py-2">
-              <a
-                href="/album"
+              <button
+                on:click={() => edit(album.id)}
                 class="px-6 py-2 font-semibold bg-purple-500 rounded-full hover:bg-emerald-400"
               >
                 EDIT
-              </a>
+            </button>
               <button
                 on:click={() => remove(album.id)}
                 class="px-6 py-2 font-semibold bg-purple-500 rounded-full hover:bg-red-500"

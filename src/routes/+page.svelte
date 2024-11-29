@@ -1,8 +1,8 @@
 <script>
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
 
   let data = [];
-  let loading = true;
 
   async function fetchData() {
     try {
@@ -18,18 +18,23 @@
 
       // Access the data through _embedded
       data = result._embedded.musicDtoList; // or result._embedded.musics depending on your API
-      loading = false;
 
       console.log('Final data:', data);
     } catch (error) {
       console.error('Error:', error);
-      loading = false;
     }
   }
 
   onMount(() => {
     fetchData();
   });
+
+  function edit(id) {
+    // Store the selected album in localStorage
+    localStorage.setItem('musicId', id);
+    // Navigate to the edit page
+    goto('/editmusic');
+  }
 
   async function remove(id) {
     try {
@@ -87,12 +92,12 @@
             <td>{music.album.artist}</td>
             <td>{music.album.title}</td>
             <td class="flex flex-row justify-end gap-4 py-2">
-              <a
-                href="/"
+              <button
+                on:click={() => edit(music.id)}
                 class="px-6 py-2 font-semibold bg-purple-500 rounded-full hover:bg-emerald-400"
               >
                 EDIT
-              </a>
+            </button>
               <button
                 on:click={() => remove(music.id)}
                 class="px-6 py-2 font-semibold bg-purple-500 rounded-full hover:bg-red-500"

@@ -3,10 +3,13 @@
   import { goto } from '$app/navigation';
 
   let albumdata = [];
-  let newMusic = {
+  let music = {
+    id: '',
     title: '',
     albumId: ''
   };
+
+  const musicId = localStorage.getItem('musicId');
 
   async function fetchData() {
     try {
@@ -27,6 +30,28 @@
     } catch (error) {
       console.error('Error:', error);
     }
+
+    try {
+      const response = await fetch(`http://localhost:8888/api/music/${musicId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      const result = await response.json();
+      console.log('Parsed result:', result); // Let's see the full structure
+
+      music = {
+        id: result.id,
+        title: result.title,
+        albumId: result.album.id,
+      };
+
+      console.log('Final data:', music);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
   async function handleSubmit(event) {
@@ -34,15 +59,16 @@
 
     // Prepare the payload
     const payload = {
-      title: newMusic.title,
-      album: {id: newMusic.albumId}
+      id: music.id,
+      title: music.title,
+      album: {id: music.albumId}
     };
 
     console.log('Sending payload:', payload); // Log the payload being sent
 
     try {
       const response = await fetch('http://localhost:8888/api/music', {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -50,16 +76,12 @@
       });
 
       if (!response.ok) {
-        throw new Error('Failed to add new music');
+        throw new Error('Failed to change music');
       }
 
       // Optionally, you can handle the response
       const result = await response.json();
-      console.log('Music added:', result);
-
-      // Reset the form
-      newMusic.title = '';
-      newMusic.albumId = '';
+      console.log('Music changed:', result);
 
       goto("/")
 
@@ -83,7 +105,7 @@
     </a>
     <div class="flex justify-center mt-10">
       <form on:submit={handleSubmit} class="flex flex-col gap-4 2xl:w-1/3">
-        <h2 class="text-2xl font-semibold">NEW MUSIC</h2>
+        <h2 class="text-2xl font-semibold">EDIT MUSIC</h2>
         <input name="id" type="hidden" />
         <label>
           Title
@@ -91,13 +113,13 @@
             name="title"
             type="text"
             placeholder="Enter music title"
-            bind:value={newMusic.title}
+            bind:value={music.title}
             class="w-full p-2 mt-1 bg-gray-800 border rounded-lg border-slate-400"
           />
         </label>
         <label>
           Select an album:<br>
-          <select name="albums" id="albums" bind:value={newMusic.albumId} class="p-2 mt-1 bg-gray-800 border rounded-lg border-slate-400 [color-scheme:dark] w-full">
+          <select name="albums" id="albums" bind:value={music.albumId} class="p-2 mt-1 bg-gray-800 border rounded-lg border-slate-400 [color-scheme:dark] w-full">
             <option value="" disabled selected>Selecting...</option>
             {#each albumdata as album}
               <option value="{album.id}">{album.title}</option>
@@ -107,7 +129,7 @@
         <button
           type="submit"
           class="inline-block px-6 py-2 mt-6 font-semibold bg-purple-500 rounded-full hover:bg-emerald-400"
-        >ADD</button>
+        >CHANGE</button>
       </form>
     </div>
   </div>
