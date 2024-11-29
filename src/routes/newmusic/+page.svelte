@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
 
   let albumdata = [];
   let loading = true;
@@ -63,6 +64,8 @@
       newMusic.title = '';
       newMusic.albumId = '';
 
+      goto("/")
+
     } catch (error) {
       console.error('Error:', error);
     }
@@ -82,7 +85,7 @@
       Voltar
     </a>
     <div class="flex justify-center mt-10">
-      <form on:submit={handleSubmit} action="/" class="flex flex-col gap-4 2xl:w-1/3">
+      <form on:submit={handleSubmit} class="flex flex-col gap-4 2xl:w-1/3">
         <h2 class="text-2xl font-semibold">NEW MUSIC</h2>
         <input name="id" type="hidden" />
         <label>
@@ -96,8 +99,9 @@
           />
         </label>
         <label>
-          Choose an album:<br>
-          <select name="albums" id="albums" class="p-2 mt-1 bg-gray-800 border rounded-lg border-slate-400 [color-scheme:dark] w-full">
+          Select an album:<br>
+          <select name="albums" id="albums" bind:value={newMusic.albumId} class="p-2 mt-1 bg-gray-800 border rounded-lg border-slate-400 [color-scheme:dark] w-full">
+            <option value="" disabled selected>Selecting...</option>
             {#each albumdata as album}
               <option value="{album.id}">{album.title}</option>
             {/each}

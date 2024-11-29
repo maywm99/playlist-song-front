@@ -1,4 +1,5 @@
 <script>
+  import { goto } from '$app/navigation';
   // Get today's date in YYYY-MM-DD format
   const today = new Date().toISOString().split("T")[0];
 
@@ -42,6 +43,9 @@ async function handleSubmit(event) {
     newAlbum.title = '';
     newAlbum.artist = '';
     newAlbum.date = today;
+
+    console.log('redirecionando')
+    goto("/album");
 
   } catch (error) {
     console.error('Error:', error);
