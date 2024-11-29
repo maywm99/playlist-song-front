@@ -31,8 +31,25 @@
     fetchData();
   });
 
-  function remove(id) {
-    data = data.filter(music => music.id !== id);
+  async function remove(id) {
+    try {
+      const response = await fetch(`http://localhost:8888/api/music/${id}` , {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(`Failed to delete music: ${errorMessage}`);
+      }
+
+      console.log('Music removed');
+      // Update the data by filtering out the removed item
+      data = data.filter(music => music.id !== id);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 </script>
 

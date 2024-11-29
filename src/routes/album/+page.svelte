@@ -42,8 +42,25 @@
     return date.toISOString().split('T')[0]; // Extract the date part
   }
 
-  function remove(id) {
-    data = data.filter(album => album.id !== id);
+  async function remove(id) {
+    try {
+      const response = await fetch(`http://localhost:8888/api/album/${id}` , {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(`Failed to delete album: ${errorMessage}`);
+      }
+
+      console.log('album removed');
+      // Update the data by filtering out the removed item
+      data = data.filter(album => album.id !== id);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 </script>
 
