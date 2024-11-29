@@ -21,7 +21,7 @@
       });
 
       const result = await response.json();
-      console.log('Parsed result:', result); // Let's see the full structure
+      console.log('Parsed result:', result);
 
       album = {
         id: result.id,
@@ -37,7 +37,7 @@
   }
 
   function formatDate(dateString) {
-    if (!dateString) return ''; // Handle case where dateString is undefined or null
+    if (!dateString) return '';
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
   }
@@ -47,9 +47,8 @@
   });
   
   async function handleSubmit(event) {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault();
   
-    // Prepare the payload
     const payload = {
         id: album.id,
       title: album.title,
@@ -57,7 +56,7 @@
       releaseDate: album.date
     };
   
-    console.log('Sending payload:', payload); // Log the payload being sent
+    console.log('Sending payload:', payload);
   
     try {
       const response = await fetch('http://localhost:8888/api/album', {
@@ -68,11 +67,6 @@
         body: JSON.stringify(payload)
       });
   
-      if (!response.ok) {
-        throw new Error('Failed to change album');
-      }
-  
-      // Optionally, you can handle the response
       const result = await response.json();
       console.log('Album changed:', result);
   

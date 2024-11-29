@@ -14,10 +14,9 @@
       });
 
       const result = await response.json();
-      console.log('Parsed result:', result); // Let's see the full structure
-
-      // Access the data through _embedded
-      data = result._embedded.albumDtoList; // or result._embedded.musics depending on your API
+      console.log('Parsed result:', result);
+      
+      data = result._embedded.albumDtoList;
 
       console.log('Final data:', data);
     } catch (error) {
@@ -30,9 +29,7 @@
   });
 
   function edit(id) {
-    // Store the selected album in localStorage
     localStorage.setItem('albumId', id);
-    // Navigate to the edit page
     goto('/album/editalbum');
   }
 
@@ -44,13 +41,8 @@
           'Content-Type': 'application/json',
         }
       });
-      if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(`Failed to delete album: ${errorMessage}`);
-      }
 
       console.log('album removed');
-      // Update the data by filtering out the removed item
       data = data.filter(album => album.id !== id);
     } catch (error) {
       console.error('Error:', error);

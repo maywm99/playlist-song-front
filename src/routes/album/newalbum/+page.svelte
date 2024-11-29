@@ -1,6 +1,6 @@
 <script>
   import { goto } from '$app/navigation';
-  // Get today's date in YYYY-MM-DD format
+
   const today = new Date().toISOString().split("T")[0];
 
 let newAlbum = {
@@ -11,16 +11,15 @@ let newAlbum = {
 
 
 async function handleSubmit(event) {
-  event.preventDefault(); // Prevent the default form submission
+  event.preventDefault(); 
 
-  // Prepare the payload
   const payload = {
     title: newAlbum.title,
     artist: newAlbum.artist,
     releaseDate: newAlbum.date
   };
 
-  console.log('Sending payload:', payload); // Log the payload being sent
+  console.log('Sending payload:', payload); 
 
   try {
     const response = await fetch('http://localhost:8888/api/album', {
@@ -31,15 +30,9 @@ async function handleSubmit(event) {
       body: JSON.stringify(payload)
     });
 
-    if (!response.ok) {
-      throw new Error('Failed to add new album');
-    }
-
-    // Optionally, you can handle the response
     const result = await response.json();
     console.log('Album added:', result);
 
-    // Reset the form
     newAlbum.title = '';
     newAlbum.artist = '';
     newAlbum.date = today;

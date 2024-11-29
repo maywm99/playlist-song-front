@@ -21,10 +21,9 @@
       });
 
       const result = await response.json();
-      console.log('Parsed result:', result); // Let's see the full structure
+      console.log('Parsed result:', result);
 
-      // Access the data through _embedded
-      albumdata = result._embedded.albumDtoList; // or result._embedded.musics depending on your API
+      albumdata = result._embedded.albumDtoList;
 
       console.log('Final data:', albumdata);
     } catch (error) {
@@ -40,7 +39,7 @@
       });
 
       const result = await response.json();
-      console.log('Parsed result:', result); // Let's see the full structure
+      console.log('Parsed result:', result);
 
       music = {
         id: result.id,
@@ -55,16 +54,15 @@
   }
 
   async function handleSubmit(event) {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault(); 
 
-    // Prepare the payload
     const payload = {
       id: music.id,
       title: music.title,
       album: {id: music.albumId}
     };
 
-    console.log('Sending payload:', payload); // Log the payload being sent
+    console.log('Sending payload:', payload); 
 
     try {
       const response = await fetch('http://localhost:8888/api/music', {
@@ -75,11 +73,6 @@
         body: JSON.stringify(payload)
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to change music');
-      }
-
-      // Optionally, you can handle the response
       const result = await response.json();
       console.log('Music changed:', result);
 
