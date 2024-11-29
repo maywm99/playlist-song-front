@@ -31,6 +31,11 @@
   async function handleSubmit(event) {
     event.preventDefault(); 
 
+    if (!newMusic.title || !newMusic.albumId) {
+      alert('Please fill out all fields');
+      return;
+    }
+
     const payload = {
       title: newMusic.title,
       album: {id: newMusic.albumId}

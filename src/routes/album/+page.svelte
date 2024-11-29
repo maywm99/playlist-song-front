@@ -54,11 +54,11 @@
   <div class="container p-10 bg-gray-800 rounded-lg">
     <a
       href="/"
-      class="inline-block px-6 py-3 font-semibold bg-purple-500 rounded-full hover:bg-emerald-400"
+      class="inline-block px-6 py-3 mb-5 font-semibold bg-purple-500 rounded-full hover:bg-emerald-400"
     >
-      MUSICS
+      GO TO MUSICS
     </a>
-    <div class="flex flex-row items-center justify-between my-2">
+    <div class="flex flex-row items-center justify-between my-3">
       <p class="text-2xl font-semibold">ALBUMS</p>
       <a
         href="/album/newalbum"

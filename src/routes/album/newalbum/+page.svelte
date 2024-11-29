@@ -13,6 +13,11 @@ let newAlbum = {
 async function handleSubmit(event) {
   event.preventDefault(); 
 
+  if (!newAlbum.title || !newAlbum.artist || !newAlbum.date) {
+      alert('Please fill out all fields');
+      return;
+    }
+
   const payload = {
     title: newAlbum.title,
     artist: newAlbum.artist,

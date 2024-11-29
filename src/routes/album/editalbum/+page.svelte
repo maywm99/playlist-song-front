@@ -48,6 +48,11 @@
   
   async function handleSubmit(event) {
     event.preventDefault();
+
+    if (!album.title || !album.artist || !album.date) {
+      alert('Please fill out all fields');
+      return;
+    }
   
     const payload = {
         id: album.id,
